@@ -21,7 +21,7 @@
       />
       <img
         priority
-        style="object-fit: cover; aspect-ratio: 1333 / 2000"
+        [style.aspectRatio]="t.ratio"
         class="{{t.name}}"
         ngSrc="./images/about-us/{{t.name}}-min.jpg"
         [width]="t.width"

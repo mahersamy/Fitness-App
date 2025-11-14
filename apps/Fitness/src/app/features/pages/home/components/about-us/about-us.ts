@@ -6,6 +6,7 @@ export interface trainersKeys {
   name: string;
   width: number;
   height: number;
+  ratio: number;
 }
 export interface servicesKeys {
   header: string;
@@ -33,17 +34,20 @@ export class AboutUs {
     {
       name: 'trainer-3',
       width: 358,
-      height: 542,
+      height: 537.1,
+      ratio: 1333 / 2000,
     },
     {
       name: 'trainer-1',
       width: 353,
-      height: 452,
+      height: 529.6,
+      ratio: 1333 / 2000,
     },
     {
       name: 'trainer-2',
       width: 222,
-      height: 188,
+      height: 148,
+      ratio: 444 / 296,
     },
   ]);
 
