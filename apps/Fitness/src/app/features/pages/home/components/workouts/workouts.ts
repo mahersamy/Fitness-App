@@ -10,8 +10,6 @@ import { MainCard } from './../../../../../shared/components/ui/main-card/main-c
 //primeNg
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { Toast } from 'primeng/toast';
@@ -20,7 +18,6 @@ import { Toast } from 'primeng/toast';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 //app Service
-import { Muscles } from './../../../../../shared/services/muscle/muscles';
 import { Muscles } from './../../../../../shared/services/muscle/muscles';
 
 //interfaces
