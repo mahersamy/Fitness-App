@@ -9,4 +9,7 @@ import { Component, input } from '@angular/core';
 })
 export class Title {
   titleImg = input.required<string>()
+  titleTxt = input.required<string>()
+  imgW = input.required<string>()
+  imgH = input.required<string>()
 }

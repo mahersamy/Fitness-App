@@ -6,6 +6,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { Category } from '../../../models/meals';
+import { Skeleton } from "primeng/skeleton";
 
 @Component({
   selector: 'app-carousel',
@@ -13,8 +14,9 @@ import { Category } from '../../../models/meals';
     MainCard,
     CarouselModule,
     ButtonModule,
-    TagModule
-  ],
+    TagModule,
+    Skeleton
+],
   templateUrl: './carousel.html',
   styleUrl: './carousel.scss',
 })
@@ -26,7 +28,7 @@ export class Carousel implements OnInit {
       {
         breakpoint: '1400px',
         numVisible: 2,
-        numScroll: 1,
+        numScroll: 2,
       },
       {
         breakpoint: '767px',

@@ -1,11 +1,11 @@
-.sec-long-desc {
-  font-family: var(--long-desc-font);
+:host ::ng-deep .sec-long-desc {
+  font-family: var(--font-1);
   font-size: calc(40 / 16) + rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #242424;
+  color: var(--text-color);
   .long-desc-span {
-    color: #FF4100;
+    color: var(--main-color) !important;
   }
 }
 

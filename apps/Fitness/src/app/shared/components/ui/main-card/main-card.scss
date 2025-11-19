@@ -6,9 +6,15 @@
   &{
     position: relative;
   }
+  .card-img {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+  }
   .card-img ,
   img {
     border-radius: 10px;
+    object-fit: cover;
     // border: 1px solid var(--main-color);
   }
   .card-desc {
@@ -17,9 +23,9 @@
         background: rgba(255, 255, 255, 0.502);
         padding: 16px;
         position: absolute;
-        bottom: 0;
+        bottom: 0%;
         width: 100%;
-        font-family: var(--card-font);
+        font-family: var(--font-1);
     }
     .card-title {
       font-weight: 700;
@@ -38,13 +44,13 @@
       }
       button {
         border:0;
-        color:#FF4100;
+        color:var(--main-color);
       }
       .icon {
         width: 24px;
         height: 24px;
-        background-color: #FF4100;
-        color: #242424;
+        background-color: var(--main-color);
+        color: var(--text-color);
       }
     }
   }

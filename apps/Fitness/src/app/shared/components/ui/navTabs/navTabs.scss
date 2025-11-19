@@ -1,17 +1,4 @@
-
-#workouts {
-  & {
-    background-image: url("/images/workouts/workouts.jpg");
-    background-position: center center;
-    background-size: 100% 100%;
-
-  }
-
-}
-
-
-
-.meal-items .nav-tabs {
+.nav-tabs {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -23,7 +10,7 @@
   li a {
     font-family: var(--font-1);
     text-decoration: none;
-    color: #242424;
+    color: var(--text-color);
     font-size: 18px;
     text-transform: capitalize;
     font-weight: 700;
@@ -37,5 +24,3 @@
     }
   }
 }
-
-
