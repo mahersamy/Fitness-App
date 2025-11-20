@@ -10,10 +10,12 @@ import {Translation} from "../../../core/services/translation/translation";
 
 
 import {AboutUs} from "./components/about-us/about-us";
+import { HorizontalCarousel } from "../../../shared/components/ui/horizontalCarousel/horizontalCarousel";
+import { MainButton } from "../../../shared/components/ui/main-button/main-button";
 @Component({
 
     selector: "app-home",
-    imports: [ButtonModule, TranslateModule, AboutUs,Meals, Workouts, Meals],
+    imports: [ButtonModule, TranslateModule, AboutUs, Meals, Workouts, Meals, HorizontalCarousel, MainButton],
     templateUrl: "./home.html",
     styleUrl: "./home.scss",
 
