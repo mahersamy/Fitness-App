@@ -159,7 +159,6 @@
             .trainer-1,
             .trainer-3 {
                 @media (min-width: 62rem) {
-                    width: 11.875rem;
                     margin-left: auto !important;
                 }
             }
@@ -192,6 +191,10 @@
 
                 @media (min-width: 53.125rem) {
                     width: 21.5625rem;
+                }
+
+                @media (min-width: 62rem) {
+                    width: 11.875rem;
                 }
 
                 @media (min-width: 68.375rem) {
