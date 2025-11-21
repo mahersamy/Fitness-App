@@ -1,8 +1,8 @@
 import {isPlatformBrowser, NgOptimizedImage} from "@angular/common";
 import {Component, computed, inject, PLATFORM_ID, signal, WritableSignal} from "@angular/core";
-import {SeoService} from "./../../../../../core/services/seo/seo.service";
+import {SeoService} from "../../../core/services/seo/seo.service";
 import {TranslatePipe} from "@ngx-translate/core";
-import {Translation} from "./../../../../../core/services/translation/translation";
+import {Translation} from "../../../core/services/translation/translation";
 import {Button} from "primeng/button";
 
 export interface trainersKeys {
