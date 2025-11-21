@@ -21,7 +21,7 @@ html {
 
 @font-face {
     font-family: 'primeicons';
-    src: url('./media/primeicons.woff2') format('woff2');
+    src: url('./../../../node_modules/primeicons/fonts/primeicons.woff2') format('woff2');
     font-display: swap; /* This will display fonts when ready */
     font-weight: normal;
     font-style: normal;
