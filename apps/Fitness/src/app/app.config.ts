@@ -15,7 +15,7 @@ import {
 // import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {provideRouter, withInMemoryScrolling, withViewTransitions} from "@angular/router";
-import {appRoutes} from "./app.routes";
+import {routes} from "./app.routes";
 
 // Primeng
 import Aura from "@primeuix/themes/aura";
@@ -97,7 +97,7 @@ export const appConfig: ApplicationConfig = {
 
         // Router with hash location (Angular 20 best practice)
         provideRouter(
-            appRoutes,
+            routes,
             withViewTransitions(),
             withInMemoryScrolling({
                 scrollPositionRestoration: "enabled",
