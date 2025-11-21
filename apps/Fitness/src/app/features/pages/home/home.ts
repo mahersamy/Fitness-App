@@ -1,24 +1,19 @@
-
-import { Component, computed, inject, PLATFORM_ID } from '@angular/core';
-import { Workouts } from './components/workouts/workouts';
-import { Meals } from "./components/meals/meals";
+import {Component, computed, inject, PLATFORM_ID} from "@angular/core";
 
 import {isPlatformBrowser} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
 import {Translation} from "../../../core/services/translation/translation";
 
-
-import {AboutUs} from "./components/about-us/about-us";
-import { HorizontalCarousel } from "../../../shared/components/ui/horizontalCarousel/horizontalCarousel";
-import { MainButton } from "../../../shared/components/ui/main-button/main-button";
+import {HorizontalCarousel} from "../../../shared/components/ui/horizontalCarousel/horizontalCarousel";
+import {AboutUs} from "../about-us/about-us";
+import {Meals} from "../meals/meals";
+import {Workouts} from "../workouts/workouts";
 @Component({
-
     selector: "app-home",
-    imports: [ButtonModule, TranslateModule, AboutUs, Meals, Workouts, Meals, HorizontalCarousel, MainButton],
+    imports: [ButtonModule, TranslateModule, AboutUs, Workouts, Meals, HorizontalCarousel],
     templateUrl: "./home.html",
     styleUrl: "./home.scss",
-
 })
 export class Home {
     private readonly translation = inject(Translation);
