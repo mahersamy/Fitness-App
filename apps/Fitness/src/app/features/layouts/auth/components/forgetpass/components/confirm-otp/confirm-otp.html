@@ -1,0 +1,43 @@
+<form
+    [formGroup]="verifyCodeForm"
+    (ngSubmit)="verifyCodeSubmit()"
+    role="form"
+    aria-label="Verification code form"
+    class="otp-form"
+>
+    <div class="otp-wrapper">
+        <div class="card flex justify-center">
+            <p-inputotp
+                formControlName="otpCode"
+                [length]="6"
+                [integerOnly]="true"
+                (onComplete)="verifyCodeSubmit()"
+            >
+                <ng-template
+                    #input
+                    let-token
+                    let-events="events"
+                >
+                    <input
+                        class="custom-otp-input"
+                        (input)="events.input($event)"
+                        (keydown)="events.keydown($event)"
+                        type="text"
+                        [attr.value]="token"
+                        [maxLength]="1"
+                    />
+                </ng-template>
+            </p-inputotp>
+        </div>
+    </div>
+
+    <!-- Confirm Button -->
+    <button
+        type="submit"
+        [disabled]="verifyCodeForm.invalid || isLoading()"
+        class="confirm-button"
+    >
+        {{ isLoading() ? ('forgetpass.verifying' | translate) : ('forgetpass.confirm' | translate)
+        }}
+    </button>
+</form>
