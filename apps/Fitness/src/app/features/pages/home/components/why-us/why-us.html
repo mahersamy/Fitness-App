@@ -73,8 +73,8 @@
                             [ngSrc]="'./images/why-us/' + item.name + '.jpg'"
                             [width]="item.width"
                             [height]="item.height"
-                            [alt]="item.alt || 'FitZone professional trainer demonstrating ' + item.specialty"
-                            [attr.aria-describedby]="item.description ? 'trainer-desc-' + $index : null"
+                            [alt]="(item.alt |translate)  + ' ' + (item.specialty |translate)"
+                            [attr.aria-describedby]="item.description |translate"
                         />
                     </div>
                 </picture>
@@ -101,14 +101,14 @@
                             [ngSrc]="'./images/why-us/' + item.name + '.jpg'"
                             [width]="item.width"
                             [height]="item.height"
-                            [alt]="item.alt || 'FitZone professional trainer demonstrating ' + item.specialty"
-                            [attr.aria-describedby]="item.description ? 'trainer-desc-' + (trainersCol1()!.length + i) : null"
+                            [alt]="(item.alt |translate)  + ' ' + (item.specialty |translate)"
+                            [attr.aria-describedby]="item.description |translate"
                         />
                     </div>
                 </picture>
                 }
             </div>
         </div>
-        <figcaption class="sr-only"></figcaption>
+        <figcaption class="sr-only">{{ "why-us.sr-only.figCaption" |translate}}</figcaption>
     </figure>
 </section>
