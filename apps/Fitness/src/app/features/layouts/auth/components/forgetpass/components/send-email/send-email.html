@@ -15,7 +15,7 @@
     <button
         type="submit"
         [disabled]="forgetPassForm.invalid || isLoading()"
-        class="solid-button"
+        class="auth-btn"
     >
         {{ isLoading() ? ('forgetpass.sending' | translate) : ('forgetpass.sendCode' | translate) }}
     </button>

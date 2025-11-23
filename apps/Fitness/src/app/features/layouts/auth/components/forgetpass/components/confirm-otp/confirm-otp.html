@@ -35,7 +35,7 @@
     <button
         type="submit"
         [disabled]="verifyCodeForm.invalid || isLoading()"
-        class="confirm-button"
+        class="auth-btn"
     >
         {{ isLoading() ? ('forgetpass.verifying' | translate) : ('forgetpass.confirm' | translate)
         }}
