@@ -29,15 +29,16 @@
                 </ng-template>
             </p-inputotp>
         </div>
+        <button
+            type="submit"
+            [disabled]="isLoading()"
+            [class.invalid]="verifyCodeForm.invalid"
+            class="auth-btn"
+        >
+            {{ isLoading() ? ('forgetpass.verifying' | translate) : ('forgetpass.confirm' |
+            translate) }}
+        </button>
     </div>
 
     <!-- Confirm Button -->
-    <button
-        type="submit"
-        [disabled]="verifyCodeForm.invalid || isLoading()"
-        class="auth-btn"
-    >
-        {{ isLoading() ? ('forgetpass.verifying' | translate) : ('forgetpass.confirm' | translate)
-        }}
-    </button>
 </form>

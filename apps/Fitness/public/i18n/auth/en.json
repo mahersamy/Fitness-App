@@ -10,7 +10,8 @@
         "or": "Or",
         "submit": "Login",
         "noAccount": "Don't Have An Account Yet?",
-        "signUp": "Register"
+        "signUp": "Register",
+        "loggingIn": "Logging In..."
     },
     "register": {
         "title": "Register",
@@ -33,7 +34,14 @@
         "sending": "Sending...",
         "verifying": "Verifying...",
         "confirm": "Confirm",
-        "resetPassword": "Reset Password"
+        "resetPassword": "Reset Password",
+        "otpTitle": "OTP CODE",
+        "otpInstructions": "Enter Your OTP Check Your Email",
+        "createTitle": "Create New Password",
+        "createHint": "Your new password must be different from previously used passwords",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "resetting": "Resetting..."
     },
     "inputErrors": {
         "required": "This field is required",

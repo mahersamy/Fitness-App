@@ -18,5 +18,13 @@
         [errorHandilgControl]="resetPasswordForm.get('confirmPassword')!"
     ></lib-fitness-input>
 
-    <button class="auth-btn">{{ 'forgetpass.resetPassword' | translate }}</button>
+    <button
+        type="submit"
+        [disabled]="isLoading()"
+        [class.invalid]="resetPasswordForm.invalid"
+        class="auth-btn mt-4"
+    >
+        {{ isLoading() ? ('forgetpass.resetting' | translate) : ('forgetpass.resetPassword' |
+        translate) }}
+    </button>
 </form>
