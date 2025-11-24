@@ -1,10 +1,12 @@
 import {Component, inject, OnInit, signal, WritableSignal} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Panel} from "../business/panel/panel";
+import { MediaContainer } from "./components/media-container/media-container";
+import { WorkoutLegends } from "./components/workout-legends/workout-legends";
 
 @Component({
     selector: "app-details",
-    imports: [Panel],
+    imports: [Panel, MediaContainer, WorkoutLegends],
     templateUrl: "./details.html",
     styleUrl: "./details.scss",
 })
