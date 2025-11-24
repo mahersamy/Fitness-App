@@ -28,7 +28,7 @@ import {StorageKeys} from "../../../../../core/constants/storage.config";
     templateUrl: "./login.html",
     styleUrl: "./login.scss",
 })
-export class Login implements OnInit {
+export class Login {
     // Denpendency Injection
     private readonly formBuilder = inject(FormBuilder);
     private readonly destroyRef = inject(DestroyRef);
@@ -39,12 +39,6 @@ export class Login implements OnInit {
     _routeBuilder = inject(RouteBuilderService);
     ROUTES = CLIENT_ROUTES;
     isLoading = signal<boolean>(false);
-
-    ngOnInit(): void {
-        console.log(
-            ["/", this.currentLang, this.ROUTES.auth.base, this.ROUTES.auth.forgetpass].join("/")
-        );
-    }
 
     get currentLang(): string {
         return this._translate.getCurrentLang();
@@ -60,14 +54,6 @@ export class Login implements OnInit {
             ],
         ],
     });
-
-    submit() {
-        if (this.loginForm.valid) {
-            console.log("Form Data:", this.loginForm.value);
-        } else {
-            this.loginForm.markAllAsTouched();
-        }
-    }
 
     saveToken(token: string): void {
         localStorage.setItem(StorageKeys.TOKEN, token);

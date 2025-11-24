@@ -48,7 +48,7 @@ export class SendEmail {
                         this.emailSubmitted.emit(email);
                         this._messageService.add({
                             severity: "success",
-                            detail: this._translate.instant("messagesToast.loginFailed"),
+                            detail: this._translate.instant("messagesToast.codeResent"),
                             life: 5000,
                         });
                     }

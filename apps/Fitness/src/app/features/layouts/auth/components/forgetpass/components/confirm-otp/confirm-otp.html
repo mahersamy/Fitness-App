@@ -38,6 +38,17 @@
             {{ isLoading() ? ('forgetpass.verifying' | translate) : ('forgetpass.confirm' |
             translate) }}
         </button>
+
+        <div class="resend-section">
+            <p>{{ 'forgetpass.didntReceiveCode' | translate }}</p>
+            @if (resendCooldown() > 0) {
+            <span class="wait-text"
+                >{{ 'forgetpass.wait' | translate: {seconds: resendCooldown()} }}</span
+            >
+            } @else {
+            <a (click)="resendCode()">{{ 'forgetpass.resendCode' | translate }}</a>
+            }
+        </div>
     </div>
 
     <!-- Confirm Button -->

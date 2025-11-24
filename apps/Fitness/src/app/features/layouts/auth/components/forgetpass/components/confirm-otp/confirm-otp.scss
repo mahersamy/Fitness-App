@@ -5,12 +5,41 @@
     width: 100%;
 }
 
-
 .otp-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1rem;
+    .resend-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+
+        p {
+            margin: 0;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: var(--orange-500);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .wait-text {
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    }
 }
 
 .custom-otp-input {
@@ -45,12 +74,11 @@
 //     transition: 0.2s;
 // }
 
-
 /* Hint text */
 .otp-hint {
     margin-top: 1rem;
     font-size: 0.9rem;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 @media (max-width: 768px) {

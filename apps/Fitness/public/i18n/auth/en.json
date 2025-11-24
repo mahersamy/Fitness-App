@@ -38,10 +38,13 @@
         "otpTitle": "OTP CODE",
         "otpInstructions": "Enter Your OTP Check Your Email",
         "createTitle": "Create New Password",
-        "createHint": "Your new password must be different from previously used passwords",
+        "createHint": "make sure its 8 characters or more",
         "newPassword": "New Password",
         "confirmPassword": "Confirm Password",
-        "resetting": "Resetting..."
+        "resetting": "Resetting...",
+        "didntReceiveCode": "Didn't Recieve Verification Code?",
+        "resendCode": "Resend Code?",
+        "wait": "Wait {{seconds}}s"
     },
     "inputErrors": {
         "required": "This field is required",
@@ -56,12 +59,15 @@
         "email": "Invalid email format (e.g., example@example.com)",
         "passwordPattern": "Password must be at least 8 characters, include uppercase, lowercase, and a special character.",
         "onlyNumbers": "This number is not valid",
-        "misMatch": "Passwords do not match"
+        "misMatch": "Passwords do not match",
+        "passwordMismatch": "Passwords do not match"
     },
     "messagesToast": {
         "loginSuccess": "Login successful! Welcome back.",
         "loginFailed": "Login failed. Please check your credentials.",
         "registerSuccess": "Registration successful! Please log in.",
-        "registerFailed": "Registration failed. Please try again."
+        "registerFailed": "Registration failed. Please try again.",
+        "otpVerified": "OTP Verified Successfully",
+        "codeResent": "Verification code sent successfully"
     }
 }

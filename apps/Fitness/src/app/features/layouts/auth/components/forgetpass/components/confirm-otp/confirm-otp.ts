@@ -5,7 +5,7 @@ import {TranslateService, TranslatePipe} from "@ngx-translate/core";
 import {MessageService} from "primeng/api";
 import {InputOtpModule} from "primeng/inputotp";
 import {AuthApiKpService, ErrorResponse, VerifyResetCodeResponse} from "auth-api-kp";
-import { HttpErrorResponse } from "@angular/common/http";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: "app-confirm-otp",
@@ -26,6 +26,7 @@ export class ConfirmOtp {
 
     // State signals
     isLoading = signal<boolean>(false);
+    resendCooldown = signal<number>(0);
 
     // Form
     verifyCodeForm: FormGroup = new FormGroup({
@@ -35,6 +36,10 @@ export class ConfirmOtp {
             Validators.maxLength(6),
         ]),
     });
+
+    ngOnInit(): void {
+        this.startCooldown();
+    }
 
     verifyCodeSubmit(): void {
         if (this.verifyCodeForm.invalid || this.isLoading()) return;
@@ -48,7 +53,7 @@ export class ConfirmOtp {
             .verifyCode(data)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: (res: VerifyResetCodeResponse  | ErrorResponse) => {
+                next: (res: VerifyResetCodeResponse | ErrorResponse) => {
                     if ("error" in res) {
                         this._messageService.add({
                             severity: "error",
@@ -58,7 +63,7 @@ export class ConfirmOtp {
                     } else {
                         this._messageService.add({
                             severity: "success",
-                            detail: this._translate.instant("messagesToast.loginFailed"),
+                            detail: this._translate.instant("messagesToast.otpVerified"),
                             life: 5000,
                         });
 
@@ -76,6 +81,54 @@ export class ConfirmOtp {
                     this.isLoading.set(false);
                 },
             });
+    }
+
+    resendCode(): void {
+        if (this.isLoading() || this.resendCooldown() > 0) return;
+
+        this.isLoading.set(true);
+
+        this._authApiKpService
+            .forgetPassword({email: this.email()})
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: (res: any) => {
+                    if ("error" in res) {
+                        this._messageService.add({
+                            severity: "error",
+                            detail: (res as ErrorResponse).error,
+                            life: 3000,
+                        });
+                    } else {
+                        this._messageService.add({
+                            severity: "success",
+                            detail: this._translate.instant("messagesToast.codeResent"),
+                            life: 5000,
+                        });
+                        this.startCooldown();
+                    }
+                },
+                error: (err: HttpErrorResponse) => {
+                    this._messageService.add({
+                        severity: "error",
+                        detail: err.error,
+                        life: 5000,
+                    });
+                },
+                complete: () => {
+                    this.isLoading.set(false);
+                },
+            });
+    }
+
+    private startCooldown(): void {
+        this.resendCooldown.set(30);
+        const interval = setInterval(() => {
+            this.resendCooldown.update((v) => v - 1);
+            if (this.resendCooldown() <= 0) {
+                clearInterval(interval);
+            }
+        }, 1000);
     }
 
     /**
