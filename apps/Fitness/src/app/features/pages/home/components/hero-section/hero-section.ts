@@ -1,11 +1,10 @@
-import {Component} from "@angular/core";
-import {Header} from "./../../../../../shared//components/ui/header/header";
-import {MainButton} from "./../../../../../shared/components/ui/main-button/main-button";
-import {NgOptimizedImage} from "@angular/common";
+import { Component } from "@angular/core";
+import { Header } from "./../../../../../shared//components/ui/header/header";
+import { MainButton } from "./../../../../../shared/components/ui/main-button/main-button";
 
 @Component({
     selector: "app-hero-section",
-    imports: [Header, MainButton, NgOptimizedImage],
+    imports: [Header, MainButton],
     templateUrl: "./hero-section.html",
     styleUrl: "./hero-section.scss",
 })
