@@ -1,6 +1,5 @@
 #details {
     height: 100vh;
-    background: #24242499;
     position: relative;
     overflow: hidden;
     background-size: cover;
@@ -21,7 +20,7 @@
         position: absolute;
         inset: 0;
         z-index: 1;
-        background: #24242499;
+        background: var(--details-bg);
     }
 
     .container {
