@@ -1,8 +1,8 @@
 .about-layout {
     padding: 1.5rem 1rem;
-    color: var(--text-color);
+    color: var(--about-text-color);
     font-family: var(--font-1);
-    background: var(--section-bg);
+    background: var(--about-section-bg);
     backdrop-filter: blur(86px);
     @media all and (min-width: 48rem) {
         padding: 5rem 2.5rem;
@@ -158,7 +158,7 @@
         .line-break {
             width: 100%;
             height: 0.0625rem;
-            background: var(--line-break-bg);
+            background: var(--about-line-break-bg);
             margin: 2rem 0;
         }
     }
