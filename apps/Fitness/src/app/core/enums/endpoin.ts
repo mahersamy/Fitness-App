@@ -1,18 +1,21 @@
-import { environment } from '@fitness-app/environment/baseUrl.dev';
+import {environment} from "@fitness-app/environment/baseUrl.dev";
 
 export class EndPoint {
-  static SIGNUP = `${environment.baseApiUrl}/api/v1/auth/signup`;
-  static SIGNIN = `${environment.baseApiUrl}/api/v1/auth/signin`;
-  static CHANGE_PASSWORD = `${environment.baseApiUrl}/api/v1/auth/change-password`;
-  static UPLOAD_PROFILE_PHOTO = `${environment.baseApiUrl}/api/v1/auth/upload-photo`;
-  static PROFILE_DATA = `${environment.baseApiUrl}/api/v1/auth/profile-data`;
-  static LOGOUT = `${environment.baseApiUrl}/api/v1/auth/logout`;
-  static FORGET_PASSWORD = `${environment.baseApiUrl}/api/v1/auth/forgotPassword`;
-  static VERIFY_RESET = `${environment.baseApiUrl}/api/v1/auth/verifyResetCode`;
-  static RESET_PASSWORD = `${environment.baseApiUrl}/api/v1/auth/resetPassword`;
-  static DELETE_ACCOUNT = `${environment.baseApiUrl}/api/v1/auth/deleteMe`;
-  static EDIT_PROFILE = `${environment.baseApiUrl}/api/v1/auth/editProfile`;
-  static LEVELS = `${environment.baseApiUrl}/api/v1/auth/levels`;
-  static MUSCLES = `${environment.baseApiUrl}/api/v1/auth/muscles`;
-  static EXERCISES = `${environment.baseApiUrl}/api/v1/auth/exercises`;
+    static SIGNUP = `${environment.baseApiUrl}auth/signup`;
+    static SIGNIN = `${environment.baseApiUrl}auth/signin`;
+    static CHANGE_PASSWORD = `${environment.baseApiUrl}auth/change-password`;
+    static UPLOAD_PROFILE_PHOTO = `${environment.baseApiUrl}auth/upload-photo`;
+    static PROFILE_DATA = `${environment.baseApiUrl}auth/profile-data`;
+    static LOGOUT = `${environment.baseApiUrl}auth/logout`;
+    static FORGET_PASSWORD = `${environment.baseApiUrl}auth/forgotPassword`;
+    static VERIFY_RESET = `${environment.baseApiUrl}auth/verifyResetCode`;
+    static RESET_PASSWORD = `${environment.baseApiUrl}auth/resetPassword`;
+    static DELETE_ACCOUNT = `${environment.baseApiUrl}auth/deleteMe`;
+    static EDIT_PROFILE = `${environment.baseApiUrl}auth/editProfile`;
+    static LEVELS = `${environment.baseApiUrl}levels`;
+    static LEVELS_BY_MUSCLE = `${environment.baseApiUrl}levels/difficulty-levels/by-prime-mover`;
+    static MUSCLES = `${environment.baseApiUrl}muscles`;
+    static EXERCISES = `${environment.baseApiUrl}exercises`;
+    static EXERCISES_BY_MUSCLE_DIFFICULTY = `${environment.baseApiUrl}exercises/by-muscle-difficulty`;
+    static MEALS_BY_CATEGORY = `${environment.mealApiUrl}filter.php`;
 }
