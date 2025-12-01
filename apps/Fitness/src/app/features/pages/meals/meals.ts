@@ -27,7 +27,6 @@ export class Meals implements OnInit {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (res) => {
-                  console.log(res);
                     this.mealCats.set(res.categories);
                 },
             });
