@@ -1,4 +1,28 @@
 {
+    "hero": {
+        "header": {
+            "part1": "Your body can",
+            "part2": "stand almost",
+            "part3": "anything"
+        },
+        "paragraph": "It's your mind that needs convincing. Push past your limits, stay committed, and watch as your body transform into power house of strength and resilience. Start your journey today & truly capable of!",
+        "statistics": {
+            "index0": {
+                "number": "1200",
+                "text": "Active Members"
+            },
+            "index1": {
+                "number": "12",
+                "text": "Certified Trainers"
+            },
+            "index2": {
+                "number": "20",
+                "text": "Year Of Experience"
+            }
+        },
+        "btn-start": "Get Started",
+        "btn-explore": "Explore More"
+    },
     "why-us": {
         "section": "WHY US",
         "titleStart": "Elevate fitness with the ",
