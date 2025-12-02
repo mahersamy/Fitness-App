@@ -4,12 +4,14 @@
 >
     @if (titleImg()) {
     <img
+        class="sec-title"
         [ngSrc]="titleImg()"
         loading="lazy"
         [width]="imgW()"
         [height]="imgH()"
-        alt="meal logo"
+        alt="section title"
     />
+    <div class="overlay"></div>
     }
     <div
         class="sub-title gap-1"
