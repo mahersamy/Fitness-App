@@ -6,8 +6,8 @@
         text-transform: capitalize;
     }
     .icon {
-        width: 35px;
-        height: 35px;
+        width: 25px;
+        height: 25px;
         background-color: var(--main-color);
         display: flex;
         justify-content: center;
@@ -15,8 +15,8 @@
         border: 2.12px solid #f3f3f4;
         border-radius: 50%;
         position: absolute;
-        right: -23px;
-        top: 0;
+        inset-inline-end: -18px;
+        top: 7px;
     }
     .login-btn {
         padding: 0.5rem 1rem;
