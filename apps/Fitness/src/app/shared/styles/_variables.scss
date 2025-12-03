@@ -51,6 +51,7 @@
     /* Navbar */
     --scroll-bg: 255, 255, 255, 0.95;
     --sidebar-bg: var(--white);
+    --nav-bg: var(--gray-100);
 }
 .dark-mode {
     --body: var(--gray-950);
@@ -87,5 +88,6 @@
     /* Navbar */
     --scroll-bg: 29, 28, 28, 0.95;
     --sidebar-bg: var(--gray-950);
+    --nav-bg: var(--gray-900);
     
 }
