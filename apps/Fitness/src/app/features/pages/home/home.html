@@ -1,13 +1,3 @@
-<div class="language-buttons">
-    @for (lang of languages; track lang.code) {
-    <p-button
-        [label]="lang.flag + ' ' + lang.label"
-        [severity]="currentLang() === lang.code ? 'success' : 'secondary'"
-        (onClick)="switchLanguage(lang.code)"
-        [outlined]="currentLang() !== lang.code"
-    />
-    }
-</div>
 <app-hero-section />
 <app-horizontal-carousel />
 <app-about-us />

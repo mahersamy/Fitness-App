@@ -25,6 +25,7 @@ import Aura from "@primeuix/themes/aura";
 import {MessageService} from "primeng/api";
 import {providePrimeNG} from "primeng/config";
 import {ToastModule} from "primeng/toast";
+import { DialogService } from 'primeng/dynamicdialog';
 
 // Translation
 import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
@@ -86,6 +87,7 @@ export const appConfig: ApplicationConfig = {
 
         // PrimeNG
         MessageService,
+         DialogService, 
         importProvidersFrom(ToastModule),
         providePrimeNG({
             theme: {

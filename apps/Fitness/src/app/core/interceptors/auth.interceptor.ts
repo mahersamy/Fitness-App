@@ -1,33 +1,22 @@
-import {HttpInterceptorFn} from "@angular/common/http";
-import {PlatFormService} from "@fitness-app/services";
-import {inject} from "@angular/core";
-import {StorageKeys} from "../constants/storage.config";
-
-/**
- * @name headerInterceptor
- * @category Interceptors
- * @description
- * Interceptor responsible for automatically attaching apikey and subdomain headers to HTTP requests.
- *
- * ### Usage
- * Registered in app.config.ts:
- * ```ts
- * providers: [
- *   { provide: HTTP_INTERCEPTORS, useClass: headerInterceptor, multi: true }
- * ]
- * ```
- *
- * @since 1.0.0
- */
+import { HttpInterceptorFn } from "@angular/common/http";
+import { PlatFormService } from "@fitness-app/services";
+import { inject } from "@angular/core";
+import { StorageKeys } from "../constants/storage.config";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+    // Skip MealDB requests completely (from second interceptor)
+    if (req.url.includes("www.themealdb.com")) {
+        return next(req);
+    }
+
     const platform = inject(PlatFormService);
-
+    
     if (platform.isBrowser()) {
-        const headers: {[key: string]: string} = {};
-
+        const headers: { [key: string]: string } = {};
+        
         const isLoginRequest = req.url.includes("/users/auth/login");
 
+        // Token logic from first interceptor
         if (!isLoginRequest) {
             const token = localStorage.getItem(StorageKeys.TOKEN);
             if (token && !req.headers.has("token")) {
@@ -35,6 +24,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             }
         }
 
+        // Bearer token logic from second interceptor
+        const bearerToken = localStorage.getItem(StorageKeys.TOKEN);
+        if (bearerToken && !req.headers.has("Authorization")) {
+            headers["Authorization"] = `Bearer ${bearerToken}`;
+        }
+
+        // Subdomain logic from first interceptor
         if (window.location && window.location.hostname && !req.headers.has("subdomain")) {
             const hostname = window.location.hostname;
             const dotIndex = hostname.indexOf(".");
@@ -52,10 +48,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             headers["subdomain"] = subdomain;
         }
 
-        if (localStorage.getItem(StorageKeys.LANGUAGE)) {
+        // Language logic - merged from both interceptors
+        // Priority: first interceptor's "accept-language" > second interceptor's "lang"
+        if (!req.headers.has("accept-language")) {
             headers["accept-language"] = localStorage.getItem(StorageKeys.LANGUAGE) || "en";
-        } else {
-            headers["accept-language"] = "en";
+        }
+        
+        // Add lang header from second interceptor
+        if (!req.headers.has("lang")) {
+            headers["lang"] = localStorage.getItem(StorageKeys.LANGUAGE) || "en";
         }
 
         if (Object.keys(headers).length > 0) {
@@ -64,5 +65,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             });
         }
     }
+    
     return next(req);
 };
