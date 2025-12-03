@@ -1,112 +1,130 @@
-<nav class="navbar surface-0 p-3 shadow-2 w-full">
-  <div class="flex align-items-center justify-content-between w-full">
-    <!-- Logo/Brand -->
-    <div class="nav-brand flex align-items-center">
-      <a 
-        [routerLink]="[getCurrentLang(), 'main', 'home']" 
-        class="text-2xl font-bold text-primary no-underline">
-        YOUR_LOGO
+<nav class="navbar" [class.scrolled]="isScrolled">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="nav-brand">
+      <a [routerLink]="[getCurrentLang(), 'main', 'home']" class="logo-link">
+        <img src="/images/fit 1.png" alt="Super Fitness" class="logo">
       </a>
     </div>
 
     <!-- Desktop Navigation Links -->
-    <div class="nav-links hidden md:flex gap-5">
-      @for (item of navItems; track item.label) {
+    <div class="nav-links desktop-only">
+      @for (item of navItems; track item.labelKey) {
         <a 
           [routerLink]="getRoute(item.path)" 
-          class="text-900 hover:text-primary font-medium no-underline transition-colors transition-duration-300">
-          {{ item.label }}
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}"
+          class="nav-link">
+          {{ item.labelKey | translate }}
         </a>
       }
     </div>
 
     <!-- Desktop Auth Section -->
-    <div class="nav-auth hidden md:flex align-items-center gap-3">
+    <div class="nav-auth desktop-only">
       @if (!isLoggedIn) {
-        <div class="flex gap-2">
-          <p-button 
-            label="Login" 
-            severity="secondary" 
-            (onClick)="onLogin()"
-            class="p-button-sm">
-          </p-button>
-          <p-button 
-            label="Sign Up" 
-            (onClick)="onSignup()"
-            class="p-button-sm">
-          </p-button>
+        <div class="auth-buttons">
+          <div class="cursor-pointer" (click)="onLogin()">
+            <app-main-button 
+              [btnText]="'navbar.login' | translate"
+              [btnBg]="'#FF6B35'"
+              [btnColor]="'white'"
+              [btnBorder]="'2px solid #FF6B35'">
+            </app-main-button>
+          </div>
+          
+          <div class="cursor-pointer" (click)="onSignup()">
+            <app-main-button 
+              [btnText]="'navbar.signup' | translate"
+              [btnBg]="'transparent'"
+              [btnColor]="'#4a5568'"
+              [btnBorder]="'2px solid orange'">
+            </app-main-button>
+          </div>
         </div>
       } @else {
-        <div class="flex align-items-center">
+        <div class="user-section">
           <p-avatar 
             icon="pi pi-user" 
-            styleClass="mr-2 cursor-pointer" 
-            size="normal"
-            (click)="accountMenu.toggle($event)"
-            style="background-color: var(--primary-color);">
+            size="large"
+            shape="circle"
+            class="user-avatar"
+            (click)="navigateToAccount()">
           </p-avatar>
-          <p-menu #accountMenu [model]="accountMenuItems" [popup]="true" [style]="{'width': '160px'}"></p-menu>
         </div>
       }
     </div>
 
     <!-- Mobile Menu Button -->
-    <div class="mobile-menu md:hidden">
-      @if (!isLoggedIn) {
-        <p-button 
-          icon="pi pi-bars"
-          styleClass="p-button-text"
-          (onClick)="toggleMobileMenu()">
-        </p-button>
-      } @else {
-        <div class="flex align-items-center gap-2">
-          <p-avatar 
-            icon="pi pi-user" 
-            styleClass="cursor-pointer" 
-            size="normal"
-            (click)="mobileAccountMenu.toggle($event)"
-            style="background-color: var(--primary-color);">
-          </p-avatar>
-          <p-button 
-            icon="pi pi-bars"
-            styleClass="p-button-text"
-            (onClick)="toggleMobileMenu()">
-          </p-button>
-          <p-menu #mobileAccountMenu [model]="accountMenuItems" [popup]="true" [style]="{'width': '160px'}"></p-menu>
-        </div>
+    <div class="mobile-menu-btn mobile-only">
+      @if (isLoggedIn) {
+        <p-avatar 
+          icon="pi pi-user" 
+          size="large"
+          shape="circle"
+          class="user-avatar"
+          (click)="navigateToAccount()">
+        </p-avatar>
       }
+      <button class="hamburger" (click)="toggleMobileMenu()" [class.active]="mobileMenuOpen">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
   </div>
 
-  <!-- Mobile Menu Dropdown -->
-  @if (mobileMenuOpen) {
-    <div class="mobile-dropdown surface-0 shadow-2 absolute w-full left-0 top-100 p-3 border-round-bottom-2xl md:hidden">
-      <div class="flex flex-column gap-3">
-        @for (item of navItems; track item.label) {
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay" 
+       [class.active]="mobileMenuOpen" 
+       (click)="closeMobileMenu()"></div>
+
+  <!-- Mobile Sidebar Menu -->
+  <div class="mobile-sidebar" [class.active]="mobileMenuOpen">
+    <!-- Sidebar Header -->
+    <div class="sidebar-header">
+      <img src="/images/fit 1.png" alt="Super Fitness" class="sidebar-logo">
+      <button class="close-btn" (click)="closeMobileMenu()">×</button>
+    </div>
+
+    <!-- Sidebar Content -->
+    <div class="sidebar-content">
+      <!-- Navigation Links -->
+      <div class="mobile-nav-links">
+        @for (item of navItems; track item.labelKey) {
           <a 
             [routerLink]="getRoute(item.path)" 
-            (click)="toggleMobileMenu()"
-            class="text-900 hover:text-primary font-medium no-underline p-3 border-round hover:surface-100 transition-colors transition-duration-300">
-            {{ item.label }}
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}"
+            class="mobile-nav-link"
+            (click)="closeMobileMenu()">
+            {{ item.labelKey | translate }}
           </a>
         }
-        
-        @if (!isLoggedIn) {
-          <div class="flex flex-column gap-2 pt-3 border-top-1 surface-100">
-            <p-button 
-              label="Login" 
-              severity="secondary" 
-              (onClick)="onLogin()"
-              class="w-full">
-            </p-button>
-            <p-button 
-              label="Sign Up" 
-              (onClick)="onSignup()"
-              class="w-full">
-            </p-button>
-          </div>
-        }
       </div>
+
+      <!-- Auth Buttons / User Info -->
+      @if (!isLoggedIn) {
+        <div class="mobile-auth-buttons">
+          <div class="cursor-pointer" (click)="onLogin(); closeMobileMenu()">
+            <app-main-button 
+              [btnText]="'navbar.login' | translate"
+              [btnBg]="'#FF6B35'"
+              [btnColor]="'white'"
+              [btnBorder]="'2px solid #FF6B35'">
+            </app-main-button>
+          </div>
+          
+          <div class="cursor-pointer" (click)="onSignup(); closeMobileMenu()">
+            <app-main-button 
+              [btnText]="'navbar.signup' | translate"
+              [btnBg]="'transparent'"
+              [btnColor]="'#4a5568'"
+              [btnBorder]="'2px solid orange'">
+            </app-main-button>
+          </div>
+        </div>
+      } 
     </div>
-  }
+  </div>
 </nav>

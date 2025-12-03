@@ -2,8 +2,10 @@
   "navbar": {
     "home": "Home",
     "about": "About",
-    "contact": "Contact",
-    "logout": "Logout"
+    "classes": "Classes",
+    "health": "Health",
+    "signup": "Sign Up",
+    "login": "Login"
   }, 
   "footer": {
     "tagline": "Push harder, go further. Your fitness journey starts today!",

@@ -7,6 +7,8 @@ import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { StorageKeys } from "../../../../../core/constants/storage.config";
 import { CLIENT_ROUTES } from "../../../../../core/constants/client-routes";
+import { MainButton } from 'apps/Fitness/src/app/shared/components/ui/main-button/main-button';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +18,9 @@ import { CLIENT_ROUTES } from "../../../../../core/constants/client-routes";
     RouterModule,
     ButtonModule,
     AvatarModule,
-    MenuModule
+    MenuModule,
+    MainButton,
+    TranslateModule 
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
@@ -25,12 +29,14 @@ export class Navbar implements OnInit {
   isLoggedIn = false;
   mobileMenuOpen = false;
   private authCheckInterval: any;
-
+  isScrolled = false;
+  
+  
   navItems = [
-    { label: 'Home', path: CLIENT_ROUTES.main.home },
-    { label: 'About', path: CLIENT_ROUTES.main.about },
-    { label: 'Classes', path: CLIENT_ROUTES.main.classes },
-    { label: 'Healthy', path: CLIENT_ROUTES.main.meals }
+    { labelKey: 'navbar.home', path: CLIENT_ROUTES.main.home },
+    { labelKey: 'navbar.about', path: CLIENT_ROUTES.main.about },
+    { labelKey: 'navbar.classes', path: CLIENT_ROUTES.main.classes },
+    { labelKey: 'navbar.health', path: CLIENT_ROUTES.main.meals }
   ];
 
   accountMenuItems: MenuItem[] = [
@@ -46,19 +52,29 @@ export class Navbar implements OnInit {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit() {
     this.checkAuthStatus();
     this.authCheckInterval = setInterval(() => {
       this.checkAuthStatus();
     }, 1000);
+
+    window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
   ngOnDestroy() {
     if (this.authCheckInterval) {
       clearInterval(this.authCheckInterval);
     }
+    window.removeEventListener('scroll', this.onScroll.bind(this));
+  }
+
+  private onScroll() {
+    this.isScrolled = window.scrollY > 20;
   }
 
   private checkAuthStatus() {
@@ -68,37 +84,47 @@ export class Navbar implements OnInit {
 
   getCurrentLang(): string {
     const lang = localStorage.getItem(StorageKeys.LANGUAGE) || 'en';
-    return lang.toLowerCase(); // Force lowercase to match route parameters
+    return lang.toLowerCase();
   }
 
-  // Simple route generation - FIXED
-  getRoute(path: string){
-    return [ path];
+  getRoute(path: string) {
+    return [path];
   }
 
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
+    
+    if (this.mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   onLogin() {
     this.router.navigate([this.getCurrentLang(), CLIENT_ROUTES.auth.base, CLIENT_ROUTES.auth.login]);
-    this.mobileMenuOpen = false;
+    this.closeMobileMenu();
   }
 
   onSignup() {
     this.router.navigate([this.getCurrentLang(), CLIENT_ROUTES.auth.base, CLIENT_ROUTES.auth.register]);
-    this.mobileMenuOpen = false;
+    this.closeMobileMenu();
   }
 
   navigateToAccount() {
     this.router.navigate([this.getCurrentLang(), 'main', CLIENT_ROUTES.main.account]);
-    this.mobileMenuOpen = false;
+    this.closeMobileMenu();
   }
 
   logout() {
     localStorage.removeItem(StorageKeys.TOKEN);
     this.checkAuthStatus();
-    this.mobileMenuOpen = false;
+    this.closeMobileMenu();
     this.router.navigate([this.getCurrentLang(), 'main', CLIENT_ROUTES.main.home]);
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
+    document.body.style.overflow = '';
   }
 }

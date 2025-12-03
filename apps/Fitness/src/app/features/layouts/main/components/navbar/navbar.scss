@@ -1,0 +1,458 @@
+:host {
+  display: block;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  padding: 0;
+  transition: background-color 0.3s ease;
+  
+
+
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+
+    @media (max-width: 768px) {
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  // Logo Section
+  .nav-brand {
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      
+      .logo {
+        height: 50px;
+        width: auto;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+          height: 40px;
+        }
+      }
+    }
+  }
+
+  // Desktop Navigation Links
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+
+    .nav-link {
+      color: #4a5568;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+
+      &:hover {
+        color: #FF6B35;
+      }
+
+      &.active {
+        color: #FF6B35;
+        font-weight: 600;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 24px;
+          height: 2px;
+          background: #FF6B35;
+          border-radius: 1px;
+        }
+      }
+    }
+  }
+
+  // Desktop Auth Section
+  .nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-section {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // Mobile Menu Button
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .hamburger {
+      background: #FF6B35;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius:70% !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+      border-radius: 8px;
+
+      &:hover {
+         transform: scale(1.05);
+         box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+      }
+
+      .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background: white;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      &.active {
+        .hamburger-line {
+          background: #FF6B35;
+
+          &:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+          }
+
+          &:nth-child(2) {
+            opacity: 0;
+          }
+
+          &:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+          }
+        }
+      }
+    }
+  }
+
+  // Mobile Menu Overlay (Slide from left)
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  // Mobile Sidebar Menu
+  .mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: fit-content;
+    background: white;
+    z-index: 1000;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    &.active {
+      left: 0;
+      z-index: 1001;
+    }
+
+    // Sidebar Header
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+
+      .sidebar-logo {
+        height: 35px;
+        width: auto;
+      }
+
+      .close-btn {
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: #4a5568;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background: rgba(255, 107, 53, 0.1);
+          color: #FF6B35;
+        }
+      }
+    }
+
+    // Sidebar Content
+    .sidebar-content {
+      flex: 1;
+      padding: 1.5rem;
+
+      .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+
+        .mobile-nav-link {
+          display: flex;
+          align-items: center;
+          color: #4a5568;
+          text-decoration: none;
+          font-size: 1.125rem;
+          font-weight: 500;
+          padding: 0.875rem 1rem;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: rgba(255, 107, 53, 0.1);
+            color: #FF6B35;
+          }
+
+          &.active {
+            background: rgba(255, 107, 53, 0.15);
+            color: #FF6B35;
+            font-weight: 600;
+          }
+        }
+      }
+
+      .mobile-auth-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+
+        app-main-button {
+          width: 100%;
+        }
+      }
+
+      // User info if logged in
+      .mobile-user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+
+        .user-greeting {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.5rem;
+
+          p-avatar {
+            background: #FF6B35 !important;
+          }
+
+          span {
+            color: #4a5568;
+            font-weight: 500;
+          }
+        }
+
+        .mobile-account-links {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+
+          .account-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #4a5568;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+
+            i {
+              font-size: 1.125rem;
+              width: 20px;
+              text-align: center;
+            }
+
+            &:hover {
+              background: rgba(255, 107, 53, 0.1);
+              color: #FF6B35;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Responsive Utilities
+  .desktop-only {
+    display: flex;
+
+    @media (max-width: 768px) {
+      display: none !important;
+    }
+  }
+
+  .mobile-only {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+}
+
+// Avatar Styles (updated for white background)
+::ng-deep .user-avatar{
+  background: #FF6B35 !important;
+  border: 2px solid transparent !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+  }
+
+  .p-avatar-icon {
+    color: #ffffff;
+  }
+}
+
+// Adjust main button styles for navbar
+::ng-deep {
+  .auth-buttons,
+  .mobile-auth-buttons {
+    app-main-button {
+      .main-button {
+        font-size: 0.875rem !important;
+        padding: 0.5rem 1.25rem !important;
+        min-height: auto !important;
+      }
+    }
+  }
+}
+
+// Add padding to body to account for fixed navbar
+:host {
+  ~ * {
+    margin-top: 82px;
+
+    @media (max-width: 768px) {
+      margin-top: 72px;
+    }
+  }
+}
+
+// Scrollbar styling for mobile sidebar
+.mobile-sidebar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+
+    &:hover {
+      background: #a0aec0;
+    }
+  }
+}
+
+// Animation for sidebar links
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.mobile-nav-links .mobile-nav-link {
+  animation: slideInLeft 0.3s ease forwards;
+  opacity: 0;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.05}s;
+    }
+  }
+}
+
+// Prevent body scrolling when menu is open
+body.menu-open {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
