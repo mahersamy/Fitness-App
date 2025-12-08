@@ -11,8 +11,6 @@ import {
     provideBrowserGlobalErrorListeners,
     provideZonelessChangeDetection,
 } from "@angular/core";
-// Hydration imports removed - not needed for static builds
-// import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {
     provideRouter,
@@ -20,6 +18,7 @@ import {
     withInMemoryScrolling,
     withViewTransitions,
 } from "@angular/router";
+
 import {routes} from "./app.routes";
 
 // Primeng
@@ -27,6 +26,7 @@ import Aura from "@primeuix/themes/aura";
 import {MessageService} from "primeng/api";
 import {providePrimeNG} from "primeng/config";
 import {ToastModule} from "primeng/toast";
+import { DialogService } from 'primeng/dynamicdialog';
 
 // Translation
 import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
@@ -48,6 +48,8 @@ import {isDevMode} from "@angular/core";
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        // Translation
+        TRANSLATION_INITIALIZER,
         // HTTP Client
         provideHttpClient(
             withFetch(),
@@ -84,7 +86,6 @@ export const appConfig: ApplicationConfig = {
         provideAnimationsAsync(),
 
         // Translation
-        TRANSLATION_INITIALIZER,
         provideTranslateService({
             loader: {
                 provide: TranslateLoader,
@@ -95,6 +96,7 @@ export const appConfig: ApplicationConfig = {
 
         // PrimeNG
         MessageService,
+         DialogService, 
         importProvidersFrom(ToastModule),
         providePrimeNG({
             theme: {
