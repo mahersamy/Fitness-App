@@ -72,6 +72,7 @@ export class Workouts implements OnInit {
             }))
         );
         this.getMusclesByGroup(muscle._id);
+        this.muscleService.activeMuscleGroup.set(muscle._id);
     }
 
     getAllMuscleGroups() {
