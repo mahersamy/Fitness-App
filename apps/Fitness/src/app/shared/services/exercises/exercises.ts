@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {inject, Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {EndPoint} from "../../../core/enums/endpoin";
+import {EndPoint} from "../../../core/enums/endpoint";
 import {ExercisesResponse} from "../../models/exercises";
 
 @Injectable({

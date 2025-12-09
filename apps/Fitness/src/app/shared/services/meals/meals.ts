@@ -1,21 +1,72 @@
 import {HttpClient} from "@angular/common/http";
-import {inject, Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {mealCatRes, MealsByCategoryResponse} from "../../models/meals";
+import {inject, Injectable, signal} from "@angular/core";
+import {Observable, retry, shareReplay} from "rxjs";
+import {Meal, mealCatRes, MealsByCategoryResponse} from "../../models/meals";
 import {environment} from "@fitness-app/environment/baseUrl.dev";
-import {EndPoint} from "../../../core/enums/endpoin";
+import {EndPoint} from "../../../core/enums/endpoint";
 
 @Injectable({
     providedIn: "root",
 })
 export class MealService {
     private http = inject(HttpClient);
+    private selectedMeal = signal<Meal | null>(null);
+
+    // Cache for categories (commonly used data)
+    private categoriesCache$?: Observable<mealCatRes>;
+
+    // Cache for meals by category
+    private mealsByCategoryCache = new Map<string, Observable<MealsByCategoryResponse>>();
 
     getMealsCats(): Observable<mealCatRes> {
-        return this.http.get<mealCatRes>(`${environment.mealApiUrl}categories.php`);
+        if (!this.categoriesCache$) {
+            this.categoriesCache$ = this.http
+                .get<mealCatRes>(`${environment.mealApiUrl}categories.php`)
+                .pipe(
+                    retry(2),
+                    shareReplay({bufferSize: 1, refCount: true}) // Cache the last emission
+                );
+        }
+        return this.categoriesCache$;
     }
 
     getMealsByCategory(cat: string): Observable<MealsByCategoryResponse> {
-        return this.http.get<MealsByCategoryResponse>(`${EndPoint.MEALS_BY_CATEGORY}?c=${cat}`);
+        // Check cache first
+        if (!this.mealsByCategoryCache.has(cat)) {
+            const request$ = this.http
+                .get<MealsByCategoryResponse>(`${EndPoint.MEALS_BY_CATEGORY}?c=${cat}`)
+                .pipe(retry(2), shareReplay({bufferSize: 1, refCount: true}));
+            this.mealsByCategoryCache.set(cat, request$);
+        }
+        return this.mealsByCategoryCache.get(cat)!;
+    }
+
+    // Clear cache when needed (e.g., after logout, or on demand)
+    clearCategoryCache(): void {
+        this.categoriesCache$ = undefined;
+    }
+
+    clearMealsByCategoryCache(cat?: string): void {
+        if (cat) {
+            this.mealsByCategoryCache.delete(cat);
+        } else {
+            this.mealsByCategoryCache.clear();
+        }
+    }
+
+    // getMealsCats(): Observable<mealCatRes> {
+    //     return this.http.get<mealCatRes>(`${environment.mealApiUrl}categories.php`);
+    // }
+
+    // getMealsByCategory(cat: string): Observable<MealsByCategoryResponse> {
+    //     return this.http.get<MealsByCategoryResponse>(`${EndPoint.MEALS_BY_CATEGORY}?c=${cat}`);
+    // }
+
+    setSelectedMeal(meal: Meal) {
+        this.selectedMeal.set(meal);
+    }
+
+    getSelectedMeal(): Meal | null {
+        return this.selectedMeal();
     }
 }
