@@ -22,7 +22,11 @@ export class Levels {
         return this.levelsByMuscleCache.get(id)!;
     }
 
-    clearCache() {
-        this.levelsByMuscleCache.clear();
+    clearCache(id?: string): void {
+        if (id) {
+            this.levelsByMuscleCache.delete(id);
+        } else {
+            this.levelsByMuscleCache.clear();
+        }
     }
 }
