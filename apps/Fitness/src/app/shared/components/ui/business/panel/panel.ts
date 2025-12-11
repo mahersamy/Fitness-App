@@ -21,10 +21,11 @@ import {MealService} from "../../../../services/meals/meals";
 import {NavTabs} from "../../navTabs/navTabs";
 import {TranslatePipe} from "@ngx-translate/core";
 import {Muscles} from "../../../../services/muscle/muscles";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
     selector: "app-panel",
-    imports: [NavTabs, TranslatePipe],
+    imports: [NavTabs, TranslatePipe, NgOptimizedImage],
     templateUrl: "./panel.html",
     styleUrl: "./panel.scss",
 })

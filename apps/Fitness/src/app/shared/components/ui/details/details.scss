@@ -1,5 +1,5 @@
 #details {
-    // min-height: 100vh;
+    min-height: 100vh;
     background: #24242499;
     position: relative;
     background-size: cover;
@@ -30,7 +30,7 @@
         inset-inline-start: 40%;
     }
 
-    .container {
+    .details-container {
         position: relative;
         z-index: 2;
         margin: 0;

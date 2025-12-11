@@ -9,7 +9,7 @@
         [src]="cat() === 'classes' ? './images/workouts/WOrkouts.png':'./images/meals/Healthy.png'"
         alt="workouts"
     /> -->
-    <div class="container">
+    <div class="details-container">
         @if (cat() === 'classes') {
         <app-nav-tabs [navItems]="workout_muscles()" />
         }
@@ -23,7 +23,11 @@
             <div class="video-wrapper col-8">
                 <div class="flex flex-column gap-4">
                     <div class="media-container">
-                        <app-media-container [type]="cat() === 'meals'?'meal':'class'" />
+                        <app-media-container
+                            [type]="cat() === 'meals'?'meal':'class'"
+                            [selectedExercise]="selectedExercise()!"
+                            [selectedMeal]="selectedMeal()!"
+                        />
                     </div>
                     @if (cat()==="classes") {
                     <div class="legends">
