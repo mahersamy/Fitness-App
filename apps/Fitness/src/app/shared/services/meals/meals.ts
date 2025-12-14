@@ -1,10 +1,16 @@
 import {HttpClient} from "@angular/common/http";
 import {inject, Injectable, signal, WritableSignal} from "@angular/core";
-import {Observable, retry, shareReplay} from "rxjs";
-import {Category, Meal, mealCatRes, MealsByCategoryResponse} from "../../models/meals";
 import {environment} from "@fitness-app/environment/baseUrl.dev";
+import {Observable, retry, shareReplay} from "rxjs";
 import {EndPoint} from "../../../core/enums/endpoint";
-import {ReloadableHttpHelper} from "../../../core/services/api-reload/reloadable-http.helper";
+import {
+    Category,
+    Meal,
+    mealCatRes,
+    MealDetails,
+    MealDetailsResponse,
+    MealsByCategoryResponse,
+} from "../../models/meals";
 
 @Injectable({
     providedIn: "root",
@@ -13,12 +19,14 @@ export class MealService {
     private http = inject(HttpClient);
 
     // Caches
-    private categoriesCache$?: Observable<mealCatRes>;
-    private mealsByCategoryCache = new Map<string, Observable<MealsByCategoryResponse>>();
+    categoriesCache$?: Observable<mealCatRes>;
+    mealsByCategoryCache = new Map<string, Observable<MealsByCategoryResponse>>();
+    mealDetailsCache = new Map<string, Observable<MealDetailsResponse>>();
 
     // State Signals
     private selectedMeal = signal<Meal | null>(null);
     mealCategories: WritableSignal<Category[]> = signal([]);
+    mealDetails: WritableSignal<MealDetails | undefined> = signal(undefined);
 
     getMealsCats(): Observable<mealCatRes> {
         if (!this.categoriesCache$) {
@@ -42,6 +50,16 @@ export class MealService {
         return this.mealsByCategoryCache.get(cat)!;
     }
 
+    getMealDetails(meal_id: string): Observable<MealDetailsResponse> {
+        if (!this.mealDetailsCache.has(meal_id)) {
+            const request$ = this.http
+                .get<MealDetailsResponse>(`${EndPoint.MEAL_DETAILS}?i=${meal_id}`)
+                .pipe(retry(2), shareReplay({bufferSize: 1, refCount: true}));
+            this.mealDetailsCache.set(meal_id, request$);
+        }
+        return this.mealDetailsCache.get(meal_id)!;
+    }
+
     setSelectedMeal(meal: Meal) {
         this.selectedMeal.set(meal);
     }
@@ -63,8 +81,17 @@ export class MealService {
         }
     }
 
+    clearMealDetailsCache(meal_id?: string): void {
+        if (meal_id) {
+            this.mealDetailsCache.delete(meal_id);
+        } else {
+            this.mealDetailsCache.clear();
+        }
+    }
+
     clearAllCache() {
         this.clearCategoryCache();
         this.clearMealsByCategoryCache();
+        this.clearMealDetailsCache();
     }
 }
