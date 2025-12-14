@@ -20,7 +20,18 @@
             text-transform: capitalize;
             margin: 16px 0px;
         }
+        .media-desc.instructions {
+            height: 90px;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+
+            &::-webkit-scrollbar {
+                display: none; /* Chrome, Safari and Opera */
+            }
+        }
         .summary-item {
+            min-width: 70px;
             border-radius: 20px;
             border: 0.5px solid white;
             padding: 8px;
