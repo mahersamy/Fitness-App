@@ -46,7 +46,7 @@
     --panel-scrollbar-track: var(--gray-50);
     --panel-scrollbar-thumb: var(--gray-400);
     // Details
-    --details-bg: #ffffff4d;
+    --details-bg: var(--white-30);
     --txt-color: var(--gray-100);
     // Panel
     --panel-border-color: var(--gray-900-14);
@@ -54,6 +54,12 @@
     --panel-icon-bg: var(--orange-500);
     --panel-icon-hover-color: var(--white);
     --panel-hover-bg: var(--light-orange-4);
+    // Ingradients
+    --ingradients-border-color: var(--gray-900-14);
+    --ingradients-text-color: var(--gray-900);
+    // Media-container
+    --media-text-color: var(--gray-900);
+    --media-gradient-color: rgba(0, 0, 0, 0.095) 3.06%, rgba(255, 255, 255, 0.777) 63.13%;
 
     // Why-Us
     --whyus-section-bg: var(--white-95);
@@ -108,10 +114,16 @@
     // Details
     --details-bg: var(--gray-900-60);
     // Panel
-    --panel-border-color: #2d2d2d;
+    --panel-border-color: var(--gray-800);
     --panel-text-color: var(--gray-100);
     --panel-icon-hover-color: var(--gray-900);
     --panel-hover-bg: var(--light-orange-5);
+    // Ingradients
+    --ingradients-border-color: var(--gray-800);
+    --ingradients-text-color: var(--gray-100);
+    // Media-container
+    --media-text-color: var(--gray-100);
+    --media-gradient-color: rgba(0, 0, 0, 0.095) 3.06%, rgba(36, 36, 36, 0.95) 63.13%;
 
     // Why-Us
     --whyus-section-bg: var(--gray-950);
