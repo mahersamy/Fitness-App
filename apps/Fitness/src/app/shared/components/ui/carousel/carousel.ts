@@ -34,6 +34,7 @@ export class Carousel implements OnInit {
                 numScroll: 1,
             },
         ];
+        console.log("Carouel Data ", this.data());
     }
 
     groupInRows(data: Muscle[] | Category[], rows = 2) {

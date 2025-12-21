@@ -1,4 +1,4 @@
-import { Component, computed, input, linkedSignal, output, OutputEmitterRef } from '@angular/core';
+import { Component, computed, input, linkedSignal, OnInit, output, OutputEmitterRef } from '@angular/core';
 import { Skeleton } from "primeng/skeleton";
 import { MuscleGroup } from '../../../models/muscles';
 import { navItem } from '../../../models/navItem';
@@ -10,8 +10,8 @@ import { navItem } from '../../../models/navItem';
   templateUrl: './navTabs.html',
   styleUrl: './navTabs.scss',
 })
-export class NavTabs {
-  navItems = input<navItem[]>();
+export class NavTabs implements OnInit {
+  navItems = input.required<navItem[]>();
   navItemClick: OutputEmitterRef<navItem> = output();
   makeArr(l: number) {
     return Array.from({ length: l });
@@ -20,5 +20,8 @@ export class NavTabs {
   itemClickEmit(e: PointerEvent, item: navItem) {
     e.preventDefault();
     this.navItemClick.emit(item);
+  }
+  ngOnInit(){
+    console.log(this.navItems());
   }
 }

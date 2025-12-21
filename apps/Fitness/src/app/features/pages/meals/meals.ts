@@ -31,8 +31,13 @@ export class Meals implements OnInit {
             .subscribe({
                 next: (res) => {
                   this.mealCats.set(res.categories)
+                  console.log(this.mealCats());
 
                 },
+                error:(err)=>{
+                  console.log(err);
+
+                }
             });
     }
 }
