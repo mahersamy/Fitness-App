@@ -1,10 +1,10 @@
-import {isPlatformBrowser} from "@angular/common";
-import {HttpClient, HttpEventType} from "@angular/common/http";
-import {inject, Injectable, PLATFORM_ID, signal} from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { HttpClient, HttpEventType } from "@angular/common/http";
+import { inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
 // rxjs
-import {filter, finalize, map} from "rxjs";
+import { catchError, filter, finalize, map, of } from "rxjs";
 // constants
-import {StorageKeys} from "../../constants/storage.config";
+import { StorageKeys } from "../../constants/storage.config";
 
 export type ChatRole = "user" | "model";
 
@@ -33,6 +33,8 @@ export class GeminiIntegration {
     private currentModelBuffer = "";
     // Current conversation history
     private history = signal<ChatMessage[]>([]);
+    // Error state
+    error = signal<string | null>(null);
 
     // All chat sessions
     chatHistory = signal<ChatSession[]>([]);
@@ -83,7 +85,7 @@ export class GeminiIntegration {
         if (activeId) {
             this.chatHistory.update((sessions) =>
                 sessions.map((session) =>
-                    session.id === activeId ? {...session, messages, updatedAt: now} : session
+                    session.id === activeId ? { ...session, messages, updatedAt: now } : session
                 )
             );
         } else {
@@ -103,8 +105,11 @@ export class GeminiIntegration {
     }
 
     sendMessage$(prompt: string) {
+        // Reset error
+        this.error.set(null);
+
         // 1️⃣ push user message immediately
-        this.history.update((h) => [...h, {role: "user", text: prompt}]);
+        this.history.update((h) => [...h, { role: "user", text: prompt }]);
 
         this.currentModelBuffer = "";
         let lastLength = 0;
@@ -112,7 +117,7 @@ export class GeminiIntegration {
         return this.http
             .post(
                 "/api/gemini/chat",
-                {messages: this.history()},
+                { messages: this.history() },
                 {
                     observe: "events",
                     responseType: "text",
@@ -132,12 +137,17 @@ export class GeminiIntegration {
 
                     return this.currentModelBuffer;
                 }),
+                catchError((err) => {
+                    this.error.set("Failed to send message. Please try again.");
+                    console.error("Gemini API Error:", err);
+                    return of(""); // Return empty string to keep stream alive or handle gracefully
+                }),
                 finalize(() => {
                     // 2️⃣ commit model message ONCE
                     if (this.currentModelBuffer.trim()) {
                         this.history.update((h) => [
                             ...h,
-                            {role: "model", text: this.currentModelBuffer},
+                            { role: "model", text: this.currentModelBuffer },
                         ]);
                     }
 
@@ -160,10 +170,10 @@ export class GeminiIntegration {
                 sessions.map((session) =>
                     session.id === activeId
                         ? {
-                              ...session,
-                              messages: [...currentMessages],
-                              updatedAt: now,
-                          }
+                            ...session,
+                            messages: [...currentMessages],
+                            updatedAt: now,
+                        }
                         : session
                 )
             );
@@ -231,7 +241,7 @@ export class GeminiIntegration {
     updateSessionTitle(id: number, title: string): void {
         this.chatHistory.update((sessions) =>
             sessions.map((session) =>
-                session.id === id ? {...session, title, updatedAt: Date.now()} : session
+                session.id === id ? { ...session, title, updatedAt: Date.now() } : session
             )
         );
         this.saveToStorage();

@@ -5,10 +5,10 @@ import {
     isMainModule,
     writeResponseToNodeResponse,
 } from "@angular/ssr/node";
-import {GoogleGenAI} from "@google/genai";
+import { GoogleGenAI, HarmCategory, HarmBlockThreshold } from "@google/genai";
 import express from "express";
-import {dirname, resolve} from "node:path";
-import {fileURLToPath} from "node:url";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, "../browser");
@@ -24,20 +24,56 @@ app.post("/api/gemini/chat", express.json(), async (req, res) => {
             return;
         }
 
-        const {messages} = req.body as {
-            messages: {role: "user" | "model"; text: string}[];
+        const { messages } = req.body as {
+            messages: { role: "user" | "model"; text: string }[];
         };
 
-        const ai = new GoogleGenAI({apiKey});
+        const ai = new GoogleGenAI({ apiKey });
 
         res.setHeader("Content-Type", "text/plain; charset=utf-8");
         res.setHeader("Transfer-Encoding", "chunked");
 
+        // System Instruction for Fitness Coach Persona
+        const systemInstruction = `You are an elite fitness coach and nutritionist.
+Your name is "Elevate Coach".
+Your goal is to help users achieve their fitness goals through scientific, practical, and motivating advice.
+Your tone is encouraging, strict when necessary, and always focused on safety and form.
+If a user asks about non-fitness topics, politely steer them back to health and wellness.`;
+
+
+
+        // Safety Settings
+        const safetySettings = [
+            {
+                category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            },
+            {
+                category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            },
+            {
+                category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            },
+            {
+                category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+            },
+        ];
+
+        // Context Management: Keep only the last 20 messages to manage tokens
+        const recentMessages = messages.slice(-20);
+
         const stream = await ai.models.generateContentStream({
             model: "gemini-2.5-flash",
-            contents: messages.map((m) => ({
+            config: {
+                systemInstruction,
+                safetySettings,
+            },
+            contents: recentMessages.map((m) => ({
                 role: m.role,
-                parts: [{text: m.text}],
+                parts: [{ text: m.text }],
             })),
         });
 
