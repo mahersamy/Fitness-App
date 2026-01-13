@@ -18,9 +18,7 @@
             [class.user]="msg.role === 'user'"
             [class.model]="msg.role === 'model'"
         >
-            @if (msg.role === 'model') {
-            <markdown [data]="msg.text"></markdown>
-            } @else { {{ msg.text }} }
+            {{ msg.text }}
         </div>
     </div>
     } @if (isStreaming()) {

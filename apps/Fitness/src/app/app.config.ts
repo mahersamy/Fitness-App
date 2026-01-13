@@ -42,7 +42,6 @@ import {isDevMode} from "@angular/core";
 import {provideEffects} from "@ngrx/effects";
 import {provideStore} from "@ngrx/store";
 import {provideStoreDevtools} from "@ngrx/store-devtools";
-import {provideMarkdown} from "ngx-markdown";
 import {AuthEffects} from "./features/layouts/auth/store/auth.effects";
 import {authReducer} from "./features/layouts/auth/store/auth.reducer";
 
@@ -124,6 +123,5 @@ export const appConfig: ApplicationConfig = {
         provideStore({auth: authReducer}),
         provideEffects([AuthEffects]),
         provideStoreDevtools({maxAge: 25, logOnly: !isDevMode()}),
-        provideMarkdown(),
     ],
 };

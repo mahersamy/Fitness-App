@@ -31,8 +31,6 @@
         "dotenv": "^17.2.3",
         "express": "^4.21.2",
         "git-cz": "^4.9.0",
-        "marked": "^17.0.1",
-        "ngx-markdown": "^21.0.1",
         "primeflex": "^4.0.0",
         "primeicons": "^7.0.0",
         "primeng": "^20.3.0",
