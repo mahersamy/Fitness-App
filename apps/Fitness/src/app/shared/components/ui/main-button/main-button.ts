@@ -17,7 +17,9 @@ export class MainButton {
     fontWeight = input<string>();
     customClass = input<string>();
 
-    fireStartExplore: InputSignal<"start" | "explore"> = input<"start" | "explore">("start");
+    fireStartExplore: InputSignal<"start" | "explore" | "bot"> = input<"start" | "explore" | "bot">(
+        "start"
+    );
     isLoggedIn: WritableSignal<boolean> = signal(false);
 
     private checkAuthStatus() {
@@ -31,6 +33,9 @@ export class MainButton {
     }
 
     getFired() {
+        if (this.fireStartExplore() === "bot") {
+            return;
+        }
         this.checkAuthStatus();
         if (this.isLoggedIn()) {
             if (this.fireStartExplore() === "start") {

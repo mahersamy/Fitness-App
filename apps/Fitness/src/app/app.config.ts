@@ -4,7 +4,6 @@ import {
     withInterceptors,
     withInterceptorsFromDi,
 } from "@angular/common/http";
-import {authInterceptor} from "./core/interceptors/auth.interceptor";
 import {
     ApplicationConfig,
     importProvidersFrom,
@@ -18,6 +17,7 @@ import {
     withInMemoryScrolling,
     withViewTransitions,
 } from "@angular/router";
+import {authInterceptor} from "./core/interceptors/auth.interceptor";
 
 import {routes} from "./app.routes";
 
@@ -25,8 +25,8 @@ import {routes} from "./app.routes";
 import Aura from "@primeuix/themes/aura";
 import {MessageService} from "primeng/api";
 import {providePrimeNG} from "primeng/config";
+import {DialogService} from "primeng/dynamicdialog";
 import {ToastModule} from "primeng/toast";
-import { DialogService } from 'primeng/dynamicdialog';
 
 // Translation
 import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
@@ -34,17 +34,16 @@ import {DEFAULT_LANGUAGE} from "./core/constants/translation.constants";
 import {TRANSLATION_INITIALIZER} from "./core/initializers/translation.initializer";
 import {createCustomTranslateLoader} from "./core/services/translation/custom-translate-loader";
 
-import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {environment} from "@fitness-app/environment/baseUrl.dev";
 import {API_CONFIG} from "auth-api-kp";
 
 // NgRx
-import {provideStore} from "@ngrx/store";
-import {provideEffects} from "@ngrx/effects";
-import {provideStoreDevtools} from "@ngrx/store-devtools";
-import {authReducer} from "./features/layouts/auth/store/auth.reducer";
-import {AuthEffects} from "./features/layouts/auth/store/auth.effects";
 import {isDevMode} from "@angular/core";
+import {provideEffects} from "@ngrx/effects";
+import {provideStore} from "@ngrx/store";
+import {provideStoreDevtools} from "@ngrx/store-devtools";
+import {AuthEffects} from "./features/layouts/auth/store/auth.effects";
+import {authReducer} from "./features/layouts/auth/store/auth.reducer";
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -96,7 +95,7 @@ export const appConfig: ApplicationConfig = {
 
         // PrimeNG
         MessageService,
-         DialogService, 
+        DialogService,
         importProvidersFrom(ToastModule),
         providePrimeNG({
             theme: {
@@ -118,7 +117,6 @@ export const appConfig: ApplicationConfig = {
             }),
             withComponentInputBinding()
         ),
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
         provideHttpClient(withFetch()),
 
         // NgRx

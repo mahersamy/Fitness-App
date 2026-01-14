@@ -15,18 +15,17 @@
         "misMatch": "Passwords do not match"
     },
     "maxlength": {
-      "prefix": "Maximum",
-      "suffix": "characters allowed"
+        "prefix": "Maximum",
+        "suffix": "characters allowed"
     },
     "email": "Invalid email format (e.g., example@example.com)",
     "passwordPattern": "Password must be at least 8 characters, include uppercase, lowercase, and a special character.",
     "onlyNumbers": "This number is not valid",
-    "misMatch": "Passwords do not match"
-  },
-  "messagesToast": {
-    "loginSuccess": "Login successful! Welcome back.",
-    "loginFailed": "Login failed. Please check your credentials.",
-    "registerSuccess": "Registration successful! Please log in.",
-    "registerFailed": "Registration failed. Please try again."
-  }
+    "misMatch": "Passwords do not match",
+    "messagesToast": {
+        "loginSuccess": "Login successful! Welcome back.",
+        "loginFailed": "Login failed. Please check your credentials.",
+        "registerSuccess": "Registration successful! Please log in.",
+        "registerFailed": "Registration failed. Please try again."
+    }
 }
